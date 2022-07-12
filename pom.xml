@@ -192,6 +192,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 支付模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-pay</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -209,6 +216,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-pay</module>
     </modules>
     <packaging>pom</packaging>
 

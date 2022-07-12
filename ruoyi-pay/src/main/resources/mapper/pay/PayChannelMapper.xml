@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.pay.mapper.PayChannelMapper">
+    
+    <resultMap type="PayChannel" id="PayChannelResult">
+        <result property="channelId"    column="channel_id"    />
+        <result property="channelCode"    column="channel_code"    />
+        <result property="channelName"    column="channel_name"    />
+        <result property="channelImg"    column="channel_img"    />
+        <result property="channelAuthInfo"    column="channel_auth_info"    />
+        <result property="isCredit"    column="is_credit"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectPayChannelVo">
+        select channel_id, channel_code, channel_name, channel_img, channel_auth_info, is_credit, order_num, status, del_flag, create_by, create_time, update_by, update_time from pay_channel
+    </sql>
+
+    <select id="selectPayChannelList" parameterType="PayChannel" resultMap="PayChannelResult">
+        <include refid="selectPayChannelVo"/>
+        <where>  
+            <if test="channelCode != null  and channelCode != ''"> and channel_code = #{channelCode}</if>
+            <if test="channelName != null  and channelName != ''"> and channel_name like concat('%', #{channelName}, '%')</if>
+            <if test="channelImg != null  and channelImg != ''"> and channel_img = #{channelImg}</if>
+            <if test="channelAuthInfo != null  and channelAuthInfo != ''"> and channel_auth_info = #{channelAuthInfo}</if>
+            <if test="isCredit != null "> and is_credit = #{isCredit}</if>
+            <if test="orderNum != null "> and order_num = #{orderNum}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectPayChannelByChannelId" parameterType="Long" resultMap="PayChannelResult">
+        <include refid="selectPayChannelVo"/>
+        where channel_id = #{channelId}
+    </select>
+        
+    <insert id="insertPayChannel" parameterType="PayChannel" useGeneratedKeys="true" keyProperty="channelId">
+        insert into pay_channel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="channelCode != null and channelCode != ''">channel_code,</if>
+            <if test="channelName != null and channelName != ''">channel_name,</if>
+            <if test="channelImg != null and channelImg != ''">channel_img,</if>
+            <if test="channelAuthInfo != null">channel_auth_info,</if>
+            <if test="isCredit != null">is_credit,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="channelCode != null and channelCode != ''">#{channelCode},</if>
+            <if test="channelName != null and channelName != ''">#{channelName},</if>
+            <if test="channelImg != null and channelImg != ''">#{channelImg},</if>
+            <if test="channelAuthInfo != null">#{channelAuthInfo},</if>
+            <if test="isCredit != null">#{isCredit},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePayChannel" parameterType="PayChannel">
+        update pay_channel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelCode != null and channelCode != ''">channel_code = #{channelCode},</if>
+            <if test="channelName != null and channelName != ''">channel_name = #{channelName},</if>
+            <if test="channelImg != null and channelImg != ''">channel_img = #{channelImg},</if>
+            <if test="channelAuthInfo != null">channel_auth_info = #{channelAuthInfo},</if>
+            <if test="isCredit != null">is_credit = #{isCredit},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where channel_id = #{channelId}
+    </update>
+
+    <delete id="deletePayChannelByChannelId" parameterType="Long">
+        delete from pay_channel where channel_id = #{channelId}
+    </delete>
+
+    <delete id="deletePayChannelByChannelIds" parameterType="String">
+        delete from pay_channel where channel_id in 
+        <foreach item="channelId" collection="array" open="(" separator="," close=")">
+            #{channelId}
+        </foreach>
+    </delete>
+
+</mapper>
