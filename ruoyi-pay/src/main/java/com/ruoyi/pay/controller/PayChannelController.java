@@ -5,11 +5,16 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.okhttp.HttpDto;
+import com.ruoyi.common.okhttp.OkHttpUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.pay.controller.vo.CheckOutRequestVo;
 import com.ruoyi.pay.domain.PayChannel;
 import com.ruoyi.pay.service.IPayChannelService;
+import okhttp3.Response;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,6 +39,26 @@ public class PayChannelController extends BaseController {
 
     @Autowired
     private IPayChannelService payChannelService;
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public AjaxResult test(){
+        HttpDto httpDto = new HttpDto();
+        httpDto.setHttpMethod(HttpMethod.GET);
+        httpDto.setUrl("http://localhost:8080/ping?time=10");
+        String resp = OkHttpUtils.buildRequest(httpDto, (response) -> {
+            if (response.isSuccessful()) {
+                try {
+                    return response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return "";
+        });
+        System.out.println(resp);
+        return AjaxResult.success();
+    }
 
     @RequiresPermissions("pay:channel:view")
     @GetMapping()

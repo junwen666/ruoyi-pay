@@ -29,6 +29,7 @@
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                                <button id="test" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>TEST1</strong>
                             </li>
                         </ul>
                     </div>
@@ -61,6 +62,14 @@
         var prefix = ctx + "pay/channel";
 
         $(function() {
+
+            $('#test').click(function () {
+                console.log('test......')
+                $.get(prefix + "/test",function (data){
+                    console.log(data)
+                });
+            });
+
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
