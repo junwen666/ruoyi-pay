@@ -22,23 +22,21 @@ import java.util.List;
 
 /**
  * 支付渠道Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-07-12
  */
 @Controller
 @RequestMapping("/pay/channel")
-public class PayChannelController extends BaseController
-{
-    private String prefix = "pay/channel";
+public class PayChannelController extends BaseController {
+    private final String prefix = "pay/channel";
 
     @Autowired
     private IPayChannelService payChannelService;
 
     @RequiresPermissions("pay:channel:view")
     @GetMapping()
-    public String channel()
-    {
+    public String channel() {
         return prefix + "/channel";
     }
 
@@ -48,8 +46,7 @@ public class PayChannelController extends BaseController
     @RequiresPermissions("pay:channel:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(PayChannel payChannel)
-    {
+    public TableDataInfo list(PayChannel payChannel) {
         startPage();
         List<PayChannel> list = payChannelService.selectPayChannelList(payChannel);
         return getDataTable(list);
@@ -62,8 +59,7 @@ public class PayChannelController extends BaseController
     @Log(title = "支付渠道", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(PayChannel payChannel)
-    {
+    public AjaxResult export(PayChannel payChannel) {
         List<PayChannel> list = payChannelService.selectPayChannelList(payChannel);
         ExcelUtil<PayChannel> util = new ExcelUtil<PayChannel>(PayChannel.class);
         return util.exportExcel(list, "支付渠道数据");
@@ -73,8 +69,7 @@ public class PayChannelController extends BaseController
      * 新增支付渠道
      */
     @GetMapping("/add")
-    public String add()
-    {
+    public String add() {
         return prefix + "/add";
     }
 
@@ -85,8 +80,7 @@ public class PayChannelController extends BaseController
     @Log(title = "支付渠道", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(PayChannel payChannel)
-    {
+    public AjaxResult addSave(PayChannel payChannel) {
         return toAjax(payChannelService.insertPayChannel(payChannel));
     }
 
@@ -95,8 +89,7 @@ public class PayChannelController extends BaseController
      */
     @RequiresPermissions("pay:channel:edit")
     @GetMapping("/edit/{channelId}")
-    public String edit(@PathVariable("channelId") Long channelId, ModelMap mmap)
-    {
+    public String edit(@PathVariable("channelId") Long channelId, ModelMap mmap) {
         PayChannel payChannel = payChannelService.selectPayChannelByChannelId(channelId);
         mmap.put("payChannel", payChannel);
         return prefix + "/edit";
@@ -109,8 +102,7 @@ public class PayChannelController extends BaseController
     @Log(title = "支付渠道", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(PayChannel payChannel)
-    {
+    public AjaxResult editSave(PayChannel payChannel) {
         return toAjax(payChannelService.updatePayChannel(payChannel));
     }
 
@@ -119,10 +111,9 @@ public class PayChannelController extends BaseController
      */
     @RequiresPermissions("pay:channel:remove")
     @Log(title = "支付渠道", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
+    @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
-    {
+    public AjaxResult remove(String ids) {
         return toAjax(payChannelService.deletePayChannelByChannelIds(ids));
     }
 }
