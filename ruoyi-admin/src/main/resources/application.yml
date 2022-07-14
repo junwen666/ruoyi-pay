@@ -16,7 +16,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 8888
+  port: 80
   servlet:
     # 应用的访问路径
     context-path: /
@@ -140,3 +140,7 @@ xss:
 swagger:
   # 是否开启swagger
   enabled: true
+
+pay:
+  return:
+    url:  http://gc97n4.natappfree.cc

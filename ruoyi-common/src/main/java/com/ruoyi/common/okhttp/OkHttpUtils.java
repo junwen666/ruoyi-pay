@@ -1,5 +1,7 @@
 package com.ruoyi.common.okhttp;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.ruoyi.common.exception.PayException;
 import com.ruoyi.common.utils.StringUtils;
@@ -41,7 +43,18 @@ public class OkHttpUtils {
         OkHttpUtils.okHttpClient = okHttpClient;
     }
 
-    public static <T> T buildRequest(HttpDto httpDto, Function<Response, T> responseProcessor) {
+    public static JSONObject doRequest(HttpDto httpDto) {
+        return doRequest(httpDto,(response) -> {
+            try {
+                return JSON.parseObject(response.body().string());
+            } catch (Exception e) {
+                logger.error("parse response body error,response:{}",JSON.toJSONString(response));
+                throw new PayException("parse response body error");
+            }
+        });
+    }
+
+    public static <T> T doRequest(HttpDto httpDto, Function<Response, T> responseProcessor) {
         Request.Builder requestBuilder = new Request.Builder().url(httpDto.getUrl());
 
         if (StringUtils.isNotBlank(httpDto.getData())) {

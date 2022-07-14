@@ -1,4 +1,4 @@
-package com.ruoyi.pay.controller.vo;
+package com.ruoyi.pay.controller.vo.request.checkout;
 
 import lombok.Getter;
 import lombok.Setter;

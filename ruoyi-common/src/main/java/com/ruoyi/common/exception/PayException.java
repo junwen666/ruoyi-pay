@@ -1,5 +1,8 @@
 package com.ruoyi.common.exception;
 
+import lombok.Getter;
+
+@Getter
 public class PayException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.ruoyi.pay.controller.vo;
+package com.ruoyi.pay.controller.vo.request.checkout;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,5 +34,7 @@ public class CheckOutRequestVo implements Serializable {
     private CardInfo cardInfo;
 
     private ShippingInfo shippingInfo;
+
+    private String paySn;
 
 }

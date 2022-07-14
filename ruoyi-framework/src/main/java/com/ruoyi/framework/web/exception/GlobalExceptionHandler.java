@@ -118,6 +118,6 @@ public class GlobalExceptionHandler
 
     @ExceptionHandler(PayException.class)
     public AjaxResult handlePayException(PayException e){
-        return AjaxResult.error(e.getMessage());
+        return AjaxResult.error(e.getMsg());
     }
 }

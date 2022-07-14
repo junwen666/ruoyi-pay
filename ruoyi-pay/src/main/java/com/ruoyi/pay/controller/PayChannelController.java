@@ -8,10 +8,8 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.okhttp.HttpDto;
 import com.ruoyi.common.okhttp.OkHttpUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.pay.controller.vo.CheckOutRequestVo;
 import com.ruoyi.pay.domain.PayChannel;
 import com.ruoyi.pay.service.IPayChannelService;
-import okhttp3.Response;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -46,7 +44,7 @@ public class PayChannelController extends BaseController {
         HttpDto httpDto = new HttpDto();
         httpDto.setHttpMethod(HttpMethod.GET);
         httpDto.setUrl("http://localhost:8080/ping?time=10");
-        String resp = OkHttpUtils.buildRequest(httpDto, (response) -> {
+        String resp = OkHttpUtils.doRequest(httpDto, (response) -> {
             if (response.isSuccessful()) {
                 try {
                     return response.body().string();
